@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsoleCoreSandbox2021.Migrations
 {
     [DbContext(typeof(HelloAppDbContext))]
-    [Migration("20210323145335_ProductsTableAdded")]
-    partial class ProductsTableAdded
+    [Migration("20210323154951_AddProductsTable")]
+    partial class AddProductsTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

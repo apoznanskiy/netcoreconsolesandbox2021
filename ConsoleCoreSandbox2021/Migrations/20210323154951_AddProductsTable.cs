@@ -2,7 +2,7 @@
 
 namespace ConsoleCoreSandbox2021.Migrations
 {
-    public partial class ProductsTableAdded : Migration
+    public partial class AddProductsTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
