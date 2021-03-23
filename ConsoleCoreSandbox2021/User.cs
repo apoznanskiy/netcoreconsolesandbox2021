@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
 namespace ConsoleCoreSandbox2021
 {
+    [Table("People")]
     public partial class User
     {
         public int Id { get; set; }
