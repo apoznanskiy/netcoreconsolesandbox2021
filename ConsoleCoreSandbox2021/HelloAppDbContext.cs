@@ -16,6 +16,8 @@ namespace ConsoleCoreSandbox2021
 
         public virtual DbSet<Product> Products { get; set;}
 
+        public virtual DbSet<Passport> Passports { get; set;}
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -30,6 +32,8 @@ namespace ConsoleCoreSandbox2021
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<Passport>().HasAlternateKey(p => new { p.Serie, p.Number });
 
             OnModelCreatingPartial(modelBuilder);
         }
