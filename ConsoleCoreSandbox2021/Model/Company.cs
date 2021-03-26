@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleCoreSandbox2021
+namespace ConsoleCoreSandbox2021.Model
 {
-    public class Product
+    public class Company
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Price { get; set; }
+
+        public List<User> Users { get; set; } = new List<User>();
     }
 }

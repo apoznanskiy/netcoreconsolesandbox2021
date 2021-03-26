@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ConsoleCoreSandbox2021.Model;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using System;
@@ -9,24 +10,32 @@ namespace ConsoleCoreSandbox2021
 {
     public class Program
     {
-        
+
 
         public static void Main(string[] args)
         {
-            using (var db = new HelloAppDbContext())
+            using (var db = new AppDbContext())
             {
-                User user1 = new User { Name = "Tom", Age = 33 };
-                User user2 = new User { Name = "Alice", Age = 26 };
+                Company microsoft = new Company { Name = "Microsoft" };
+                Company google = new Company { Name = "Google" };
+                db.Companies.AddRange(microsoft, google);
 
-                db.Users.Add(user1);
-                db.Users.Add(user2);
+                User tom = new User { Name = "Tom", Age = 36, Company = microsoft };
+                User bob = new User { Name = "Bob", Age = 39, Company = google };
+                User alice = new User { Name = "Alice", Age = 28, Company = microsoft };
+                User kate = new User { Name = "Kate", Age = 25, Company = google };
+
+                db.Users.AddRange(tom, bob, alice, kate);
                 db.SaveChanges();
 
-                var users = db.Users.ToList();
-                Console.WriteLine("Данные после добавления:");
-                foreach (User u in users)
+                var users = db.Users
+                    .Where(u => u.Age > 30)
+                    .Union(db.Users.Where(u => u.Name.Contains("Kate")))
+                    .ToList();
+
+                foreach (var user in users)
                 {
-                    Console.WriteLine($"{u.Id}.{u.Name} - {u.Age}");
+                    Console.WriteLine($"{user.Name}, age {user.Age}");
                 }
             }
 

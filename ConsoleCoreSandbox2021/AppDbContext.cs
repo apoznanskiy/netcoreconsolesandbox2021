@@ -1,22 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ConsoleCoreSandbox2021.Model;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.IO;
 
 namespace ConsoleCoreSandbox2021
 {
-    public partial class HelloAppDbContext : DbContext
+    public partial class AppDbContext : DbContext
     {
-        public HelloAppDbContext()
+        public AppDbContext()
         {
-            //Database.EnsureCreated();
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
         }
 
         public virtual DbSet<User> Users { get; set; }
-
-        public virtual DbSet<Product> Products { get; set;}
-
-        public virtual DbSet<Passport> Passports { get; set;}
+        public virtual DbSet<Company> Companies { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,15 +30,7 @@ namespace ConsoleCoreSandbox2021
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-
-            modelBuilder.Entity<Passport>().HasAlternateKey(p => new { p.Serie, p.Number });
-            modelBuilder.Entity<User>().Property(u => u.Age).HasDefaultValue(18);
-
-            OnModelCreatingPartial(modelBuilder);
         }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
         private static string GetConnectionString()
         {
